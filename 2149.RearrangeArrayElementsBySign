@@ -1,0 +1,32 @@
+class Solution {
+    public int[] rearrangeArray(int[] nums) {
+        
+        int arr[]=new int[nums.length];
+        int arr2[]=new int[nums.length];
+
+        int posIndex = 0, negIndex = 0;
+
+        for (int num : nums) {
+            if (num > 0) {
+                arr[posIndex++] = num;
+            } else {
+                arr2[negIndex++] = num;
+            }
+        }
+
+        int result[]=new int[nums.length];
+        posIndex = 0;
+        negIndex = 0;
+        for(int i=0;i<nums.length;i++){
+            if(i%2==0){
+                result[i]=arr[posIndex++];
+            }
+            else{
+                result[i]=arr2[negIndex++];
+            }
+            
+        }
+
+        return result;
+    }
+}
