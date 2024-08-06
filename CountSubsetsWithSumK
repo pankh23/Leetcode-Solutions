@@ -1,0 +1,39 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+    public static int findWays(int num[], int tar) {
+        // Write your code here.
+
+        int dp[][]=new int[num.length][tar+1];
+
+        for(int i[]:dp){
+            Arrays.fill(i, -1);
+        }
+        return helper(num, tar, num.length-1, dp);
+
+    }
+
+    public static int helper(int num[], int tar, int i, int dp[][]){
+
+        if(i==0){
+
+            if(tar==0 && num[0]==0) return 2;
+            if(tar==0 || tar==num[0]) return 1;
+            return 0;
+        }
+
+        if(dp[i][tar]!=-1){
+            return dp[i][tar];
+        }
+
+        int start=helper(num, tar, i-1, dp);
+        int end=0;
+        if(num[i]<=tar){
+
+            end=helper(num, tar-num[i], i-1, dp);
+        }
+
+        return dp[i][tar]=(start+end)%(int)(1e9+7);
+    }
+}
