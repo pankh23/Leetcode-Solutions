@@ -1,0 +1,39 @@
+class Solution {
+    public int change(int amount, int[] coins) {
+        
+        int n=coins.length;
+        int dp[][]=new int[n][amount+1];
+
+        for(int i[]:dp){
+
+            Arrays.fill(i, -1);
+        } 
+        
+        return helper(amount, coins, n, dp, n-1);
+    }
+
+    public int helper(int amount, int[] coins, int len, int[][] dp, int ind){
+
+        if(amount==0){
+            return 1;
+        }
+
+        if(ind<0){
+            return 0;
+        }
+
+        if(dp[ind][amount]!=-1){
+            return dp[ind][amount];
+        }
+
+        int count=helper(amount, coins, len, dp, ind-1);
+        // int count2=Integer.MAX_VALUE;
+
+        if(coins[ind]<=amount){
+
+            count+=helper(amount-coins[ind], coins, len, dp, ind);
+        }
+
+        return dp[ind][amount]=count;
+    }
+}
