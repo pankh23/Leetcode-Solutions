@@ -1,0 +1,13 @@
+class Solution {
+    public int mySqrt(int x) {
+        
+        long digit=1;
+        
+        while(digit * digit <=x){
+
+            digit++;
+        }
+
+        return (int)digit-1;
+    }
+}
