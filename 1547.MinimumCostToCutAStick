@@ -1,0 +1,33 @@
+class Solution {
+    public int minCost(int n, int[] cuts) {
+        
+        Arrays.sort(cuts);
+        int[][] dp = new int[cuts.length + 1][cuts.length + 1];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+        return helper(0, n, cuts, 0, cuts.length - 1, dp);
+    }
+
+    public int helper(int start, int end, int[] cuts, int left, int right, int[][] dp) {
+
+        if (left > right) {
+            return 0;
+        }
+
+        if (dp[left][right] != -1) {
+            return dp[left][right];
+        }
+        int minCost = Integer.MAX_VALUE;
+
+        for (int i = left; i <= right; i++) {
+            int cost = (end - start) +
+                helper(start, cuts[i], cuts, left, i - 1, dp) +
+                helper(cuts[i], end, cuts, i + 1, right, dp);
+            minCost = Math.min(minCost, cost);
+        }
+
+        dp[left][right] = minCost; 
+        return minCost;
+    }
+}
