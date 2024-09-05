@@ -1,0 +1,19 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        
+        List<Integer> res=new ArrayList<>();
+
+        for(int i=0;i<nums.length;i++){
+
+            if(nums[i]==target){
+
+                res.add(i);
+            }
+        }
+
+        if(res.isEmpty()){
+            return new int[] {-1, -1};
+        }
+        return new int[]{res.get(0), res.get(res.size()-1)};
+    }
+}
