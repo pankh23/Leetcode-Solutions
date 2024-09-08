@@ -1,0 +1,23 @@
+public class Solution {
+    public static int subarraysWithSumK(int []a, int b) {
+        // Write your code here
+        int count=0;
+
+        for(int i=0;i<a.length;i++){
+
+            int xor=0;
+
+            for(int j=i;j<a.length;j++){
+
+                xor=xor^a[j];
+
+                if(xor==b){
+
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+}
