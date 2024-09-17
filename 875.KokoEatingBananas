@@ -1,0 +1,56 @@
+class Solution {
+
+    public int max(int arr[]){
+
+        int ans=Integer.MIN_VALUE;
+
+        for(int i=0;i<arr.length;i++){
+
+            if(arr[i]>ans){
+
+                ans=arr[i];
+            }
+        }
+
+        return ans;
+    }
+    public int minEatingSpeed(int[] piles, int h) {
+        
+        int left=0;
+        int right=max(piles);
+
+        while(left<=right){
+
+            int mid=(left+right)/2;
+
+            int hours=helper(piles, mid);
+
+            if(hours<=h){
+
+                right=mid-1;
+            }
+
+            else{
+                left=mid+1;
+            }
+        }
+
+        return left;
+
+
+    }
+
+    public int helper(int piles[], int h){
+
+        int hours=0;
+
+        for(int i=0;i<piles.length;i++){
+
+            hours+=Math.ceil((double)piles[i]/h);
+        }
+
+        return hours;
+    }
+
+    
+}
