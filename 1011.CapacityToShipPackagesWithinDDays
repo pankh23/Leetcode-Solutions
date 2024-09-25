@@ -1,0 +1,43 @@
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        
+        int min=0;
+        int max=0;
+
+        for(int i:weights){
+
+            min=Math.max(min, i);
+            max+=i;
+        }
+
+        while(max>min){
+
+            int d=1;
+            int sum=0;
+
+            int mid=(min+max)/2;
+
+            for(int i:weights){
+
+                if(sum+i>mid){
+
+                    d++;
+                    sum=0;
+                }
+                sum+=i;
+            }
+
+            if(d>days){
+
+                min=mid+1;
+            }
+            else{
+                max=mid;
+            }
+        }
+
+        return min;
+
+        
+    }
+}
