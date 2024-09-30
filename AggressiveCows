@@ -1,0 +1,43 @@
+import java.util.Arrays;
+
+public class Solution {
+    public static int aggressiveCows(int []stalls, int k) {
+        //    Write your code here.
+
+        Arrays.sort(stalls);
+        int n=stalls.length;
+
+        int start=0;
+        int end=stalls[n-1]-stalls[0];
+
+        int ans=0,mid;
+
+        while(start<=end){
+
+            mid=(start+end)/2;
+
+            int pos=stalls[0];
+            int count=1;
+
+            for(int i=0;i<n;i++){
+
+                if(pos+mid<=stalls[i]){
+
+                    count++;
+                    pos=stalls[i];
+                }
+
+            }
+
+            if(count<k){
+                end=mid-1;
+            }
+            else{
+
+                start=mid+1;
+                ans=mid;
+            }
+        }
+        return ans;
+    }
+}
