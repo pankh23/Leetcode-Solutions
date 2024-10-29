@@ -1,0 +1,22 @@
+class GfG {
+    public Stack<Integer> sort(Stack<Integer> s) {
+        // add code here.
+        
+       ArrayList<Integer> res=new ArrayList<>();
+       
+       while(!s.isEmpty()){
+           
+           res.add(s.pop());
+       }
+       
+       Collections.sort(res);
+       
+       Stack<Integer> ans=new Stack<>();
+       
+       for(int i:res){
+           ans.push(i);
+       }
+       
+       return ans;
+    }
+}
