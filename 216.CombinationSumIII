@@ -1,0 +1,32 @@
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        
+        List<List<Integer>> ans=new ArrayList<>();
+        List<Integer> hel=new ArrayList<>();
+
+        int arr[]={1, 2, 3, 4, 5, 6, 7, 8, 9};
+        helper(0, arr, k, n, 0, 0, ans, hel);
+
+        return ans;
+    }
+
+    public void helper(int len, int arr[], int k, int n, int ind, int sum, List<List<Integer>> ans, List<Integer> hel){
+
+        if(len==k && sum==n){
+
+            ans.add(new ArrayList<>(hel));
+            return;
+        }
+
+        if(ind>=arr.length || len>k || sum>n){
+            return;
+        }
+
+        hel.add(arr[ind]);
+
+        helper(len+1, arr, k, n, ind+1, sum+arr[ind], ans, hel);
+        hel.remove(hel.size()-1);
+
+        helper(len, arr, k, n, ind+1, sum, ans, hel);
+    }
+}
