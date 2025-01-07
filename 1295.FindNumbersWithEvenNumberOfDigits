@@ -1,0 +1,29 @@
+class Solution {
+    public int findNumbers(int[] nums) {
+        
+        int ans;
+        int res=0;
+        for(int i=0;i<nums.length;i++){
+
+            ans=helper(nums, nums[i]);
+
+            if(ans%2==0){
+                res++;
+            }
+        }
+        return res;
+    }
+
+    public int helper(int[] nums, int ind){
+
+        int count=0;
+
+        while(ind>0){
+
+            int n=ind%10;
+            ind/=10;
+            count++;
+        }
+        return count;
+    }
+}
