@@ -1,0 +1,25 @@
+class Solution {
+    public int subtractProductAndSum(int n) {
+        
+        int p=1;
+        int s=0;
+
+        int ori=n;
+
+        while(n>0){
+
+            int k=n%10;
+            p*=k;
+            n/=10;
+        }
+
+        while(ori>0){
+
+            int i=ori%10;
+            s+=i;
+            ori/=10;
+        }
+
+        return p-s;
+    }
+}
