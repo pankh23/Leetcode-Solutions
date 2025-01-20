@@ -1,0 +1,33 @@
+class Solution {
+    public int firstCompleteIndex(int[] arr, int[][] mat) {
+        
+        int m=mat.length;
+        int n=mat[0].length;
+
+        Map<Integer, int[]> helper=new HashMap<>();
+
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+
+                helper.put(mat[i][j], new int[]{i, j});
+            }
+        }
+
+        int[] rCount=new int[m];
+        int[] cCount=new int[n];
+
+        for(int i=0;i<arr.length;i++){
+
+            int[] a=helper.get(arr[i]);
+
+            rCount[a[0]]++;
+            cCount[a[1]]++;
+
+            if(rCount[a[0]]==n || cCount[a[1]]==m){
+                return i;
+            }
+            
+        }
+        return arr.length-1;
+    }
+}
