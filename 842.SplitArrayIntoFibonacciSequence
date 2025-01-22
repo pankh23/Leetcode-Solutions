@@ -1,0 +1,46 @@
+class Solution {
+    public List<Integer> splitIntoFibonacci(String num) {
+        
+        List<Integer> res=new ArrayList<>();
+        
+        if(helper(num, res, 0))return res;
+
+        else{
+            return new ArrayList<>();
+        }
+    }
+
+    public boolean helper(String num, List<Integer> res, int pos){
+
+        if(pos==num.length()){
+
+            return res.size()>2;
+        }
+
+        long n=0;
+
+        for(int i=pos;i<num.length();i++){
+
+            n=(n*10)+num.charAt(i)-'0';
+            if(n<0)return false;
+
+            if (i > pos && num.charAt(pos) == '0') break;
+            if (n > Integer.MAX_VALUE) break;
+
+            if(res.size()<2 || res.get(res.size()-1)+res.get(res.size()-2)==n){
+
+                res.add((int)n);
+
+                if(helper(num, res, i+1)) return true;
+
+            res.remove(res.size()-1);
+            }   
+
+            if(i==pos && num.charAt(i)=='0'){
+
+                return false;
+            }
+        }
+        return false;
+    }
+}
