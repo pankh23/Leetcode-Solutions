@@ -1,0 +1,29 @@
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        
+        List<String> str=new ArrayList<>();
+
+        helper("", n, str, 0, 0);
+
+        return str;
+    }
+
+    public void helper(String curr, int n, List<String> ans, int o, int c){
+
+
+        if(curr.length()==2*n){
+
+            ans.add(curr);
+            return;
+        }
+
+        if(o<n){
+
+            helper(curr+"(", n, ans, o+1, c);
+        }
+        if(c<o){
+
+            helper(curr+")", n, ans, o, c+1);
+        }
+    }
+}
