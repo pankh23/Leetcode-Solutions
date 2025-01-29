@@ -1,0 +1,32 @@
+class Solution {
+    public boolean checkRecord(String s) {
+        
+        return late(s, 0, 0, 0);
+    }
+
+    public boolean late(String k, int index, int late, int absent){
+
+        if(late>=3 || absent>=2){
+            return false;
+        }
+
+        if(index==k.length()){
+            return true;
+        }
+
+        char c=k.charAt(index);
+
+        if(c=='A'){
+
+            return late(k, index+1, 0, absent+1);
+        }
+        else if(c=='L'){
+
+            return late(k, index+1, late+1, absent);
+        }
+        else{
+
+            return late(k, index+1, 0, absent);
+        }
+    }
+}
