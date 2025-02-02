@@ -1,0 +1,43 @@
+class Solution {
+    public List<List<String>> partition(String s) {
+        
+        List<List<String>> str=new ArrayList<>();
+
+        helper(new ArrayList<>(), str, s, 0);
+        return str;
+    }
+
+    public void helper(List<String> one, List<List<String>> two, String s, int start){
+
+        if(start==s.length()){
+
+            two.add(new ArrayList<>(one));
+            return;
+        }
+
+        for(int end=start+1;end<=s.length();end++){
+
+            if(palindrome(s, start, end-1)){
+
+                one.add(s.substring(start, end));
+
+                helper(one, two, s, end);
+
+                one.remove(one.size() - 1);
+            }
+        }
+    }
+    public boolean palindrome(String str, int left, int right){
+
+        while(left<right){
+
+            if(str.charAt(left++)!=str.charAt(right--)){
+
+                return false;
+            }
+
+        }
+        return true;
+
+    }
+}
