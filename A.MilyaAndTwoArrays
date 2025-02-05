@@ -1,0 +1,83 @@
+import java.util.*;
+
+public class milya{
+
+    public static boolean good(int arr[]){
+
+        HashMap<Integer, Integer> freq = new HashMap<>();
+
+        for (int num : arr) {
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
+        }
+
+        for (int count : freq.values()) {
+            if (count < 2) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    public static boolean distinct(int[] a, int b[]){
+
+
+        HashMap<Integer, Integer> mp=new HashMap<>();
+        HashMap<Integer, Integer> m=new HashMap<>();
+
+        for(int i=0;i<a.length;i++){
+
+            mp.put(a[i], mp.getOrDefault(a[i], 0) + 1);
+        }
+
+        for(int i=0;i<b.length;i++){
+
+            m.put(b[i], mp.getOrDefault(b[i], 0) + 1);
+        }
+
+        if(mp.size()+m.size()>=4){
+            return true;
+        }
+        return false;
+    }
+
+    public static void main(String[] args){
+
+        Scanner sc=new Scanner(System.in);
+
+        int t=sc.nextInt();
+
+        while(t-- > 0){
+
+            int size=sc.nextInt();
+            int[] a=new int[size];
+            int[] b=new int[size];
+
+            for(int i=0;i<size;i++){
+
+                a[i]=sc.nextInt();
+            }
+
+            for (int i = 0; i < size; i++) {
+                b[i] = sc.nextInt();
+            }
+
+            if(good(a) && good(b)){
+
+            if(distinct(a, b)){
+
+                System.out.println("YES");
+            }
+            else{
+
+                System.out.println("NO");
+            }
+            }
+            else{
+                System.out.println("NO");
+            }
+        }
+
+        sc.close();
+    }
+}
