@@ -1,0 +1,36 @@
+class Solution {
+    public ListNode doubleIt(ListNode head) {
+        head = reverse(head);
+        ListNode temp = head;
+        int carry = 0;
+        
+        ListNode prev = null; // Track the last processed node
+        
+        while (temp != null) {
+            int ans = temp.val * 2 + carry;
+            temp.val = ans % 10;
+            carry = ans / 10;
+            
+            prev = temp; // Update last processed node
+            temp = temp.next;
+        }
+        
+        // If carry remains, add a new node
+        if (carry > 0) {
+            prev.next = new ListNode(carry);
+        }
+        
+        return reverse(head);
+    }
+
+    private ListNode reverse(ListNode head) {
+        ListNode prev = null, curr = head;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+}
