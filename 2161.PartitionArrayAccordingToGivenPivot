@@ -1,0 +1,34 @@
+class Solution {
+    public int[] pivotArray(int[] nums, int pivot) {
+        
+        int left=0, right=nums.length-1;
+        int count=0;
+        int arr[]=new int[nums.length];
+
+        for(int num:nums){
+
+            if(num<pivot){
+
+                arr[left++]=num;
+            }
+            else if(num==pivot){
+                count++;
+            }
+        }
+
+        while(count-->0){
+
+            arr[left++]=pivot;
+        }
+
+        for(int num:nums){
+
+            if(num>pivot){
+
+                arr[left++]=num;
+            }
+        }
+
+        return arr;
+    }
+}
