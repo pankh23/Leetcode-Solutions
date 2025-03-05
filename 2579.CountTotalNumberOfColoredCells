@@ -1,0 +1,10 @@
+class Solution {
+    public long coloredCells(int n) {
+        
+        if(n==1){
+            return (long)1;
+        }
+
+        return 1L+2L*n*(n-1);
+    }
+}
