@@ -1,0 +1,59 @@
+class Solution {
+    public long countOfSubstrings(String word, int k) {
+        
+        long ans=0;
+        int j=-1, A=-1, E=-1, I=-1, O=-1, U=-1;
+
+        Queue<Integer> helper=new LinkedList<>();
+
+        for(int i=0;i<word.length();i++){
+
+            char ch=word.charAt(i);
+
+            if(isVowel(ch)){
+
+                if(ch=='a'){
+                    A=i;
+                }
+                else if(ch=='e'){
+                    E=i;
+                }
+                else if(ch=='i'){
+                    I=i;
+                }
+                else if(ch=='o'){
+                    O=i;
+                }
+                else{
+                    U=i;
+                }
+            }
+            else{
+
+                helper.offer(i);
+
+                if(helper.size()>k){
+
+                    j=helper.poll();
+                }
+            }
+
+            if(helper.size()==k && A>j && E>j && I>j && O>j && U>j){
+
+                int count = Math.min(A, Math.min(E, Math.min(I, Math.min(O, U))));
+                
+                if (k > 0) {
+                    count = Math.min(count, helper.peek());
+                }
+
+                ans += count - j;
+            }
+        }
+        return ans;
+    }
+
+    public boolean isVowel(char c){
+
+        return c=='a' || c=='e' || c=='i' || c=='o' || c=='u';
+    }
+}
