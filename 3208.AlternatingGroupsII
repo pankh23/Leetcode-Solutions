@@ -1,0 +1,32 @@
+class Solution {
+    public int numberOfAlternatingGroups(int[] colors, int k) {
+
+        int count=0;
+        int n=colors.length, invalid=0;
+
+        for(int i=0;i<k-1;i++){
+
+            if(colors[i]==colors[i+1]){
+                invalid++;
+            }
+        }
+
+        if(invalid==0){
+            count++;
+        }
+
+        for(int i=1;i<n;i++){
+
+            if(colors[(i-1) % n]==colors[i % n]){
+                invalid--;
+            }
+
+            if (colors[(i+k-2) % n] == colors[(i+k-1) % n]) invalid++;
+
+            if(invalid==0){
+                count++;
+            }
+        }
+        return count;
+    }
+}
