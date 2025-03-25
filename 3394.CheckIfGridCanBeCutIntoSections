@@ -1,0 +1,40 @@
+class Solution {
+    public boolean checkValidCuts(int n, int[][] rectangles) {
+        
+        ArrayList<int[]> x=new ArrayList<>();
+        ArrayList<int[]> y=new ArrayList<>();
+
+        for(int[] rect:rectangles){
+
+            y.add(new int[]{rect[1], 0});
+            y.add(new int[]{rect[3], 1});
+            x.add(new int[]{rect[0], 0});
+            x.add(new int[]{rect[2], 1});
+        }
+
+        Collections.sort(x, (a, b) -> a[0] == b[0] ? b[1] - a[1] : a[0] - b[0]);
+        Collections.sort(y, (a, b) -> a[0] == b[0] ? b[1] - a[1] : a[0] - b[0]);
+        
+        return helper(x) || helper(y);
+    }
+
+    public boolean helper(ArrayList<int[]> x){
+
+        int overlap=0, lines=0;
+
+        for(int[] point:x){
+
+            if(point[1]==0){
+                overlap++;
+            }
+            else{
+                overlap--;
+            }
+
+            if(overlap==0){
+                lines++;
+            }
+        }
+        return lines>=3;
+    }
+}
