@@ -1,0 +1,44 @@
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        
+        List<List<Integer>> ans=new ArrayList<>();
+
+        if(nums==null || nums.length==0){
+            return ans;
+        }
+
+        helper(nums, ans, 0);
+        return ans;
+    }
+
+    public void helper(int[] nums, List<List<Integer>> ans, int ind){
+
+        if(ind==nums.length){
+
+            List<Integer> temp=new ArrayList<>();
+
+            for(int n:nums){
+                temp.add(n);
+            }
+            ans.add(temp);
+        }
+        Set<Integer> set=new HashSet<>();
+
+        for(int i=ind;i<nums.length;i++){
+
+            if(set.add(nums[i])){
+                swap(nums, ind, i);
+                helper(nums, ans, ind+1);
+                swap(nums, ind, i);
+            }
+        }
+
+    }
+
+    public void swap(int[] nums, int i, int j){
+
+        int temp=nums[i];
+        nums[i]=nums[j];
+        nums[j]=temp;
+    }
+}
