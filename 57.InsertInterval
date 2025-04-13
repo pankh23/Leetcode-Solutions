@@ -1,0 +1,28 @@
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        
+        List<int[]> helper=new ArrayList<>(Arrays.asList(intervals));
+        helper.add(newInterval);
+
+        Collections.sort(helper, (a, b)-> Integer.compare(a[0], b[0]));
+
+        List<int[]> ans=new ArrayList<>();
+
+        int[] curr=helper.get(0);
+
+        for(int i=1;i<helper.size();i++){
+
+            int[] newInt=helper.get(i);
+
+            if(curr[1]>=newInt[0]){
+                curr[1]=Math.max(newInt[1], curr[1]);
+            }
+            else{
+                ans.add(curr);
+                curr=newInt;
+            }
+        }
+        ans.add(curr);
+        return ans.toArray(new int[ans.size()][]);
+    }
+}
