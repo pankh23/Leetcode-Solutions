@@ -1,0 +1,20 @@
+class Solution {
+    public int numberOfArrays(int[] differences, int lower, int upper) {
+        
+        long max=0;
+        long min=0;
+
+        int i=0;
+
+    
+        for(int d:differences){
+
+            i+=d;
+            max=Math.max(i, max);
+            min=Math.min(i, min);
+        }
+
+        return (int)Math.max(0, (upper-max)+(min-lower)+1);
+        
+    }
+}
