@@ -1,0 +1,35 @@
+class Solution {
+    public int countLargestGroup(int n) {
+        
+        HashMap<Integer, Integer> map=new HashMap<>();
+        int max=0;
+
+
+        for(int i=1;i<=n;i++){
+
+            int dig=helper(i);
+            map.put(dig, map.getOrDefault(dig, 0)+1);
+            max=Math.max(map.get(dig), max);
+        }
+        int count=0;
+
+        for(int size:map.values()){
+            if(size==max){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int helper(int k){
+
+        int sum=0;
+
+        while(k>0){
+
+            sum+=k%10;
+            k/=10;
+        }
+        return sum;
+    }
+}
