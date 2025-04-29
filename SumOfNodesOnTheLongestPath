@@ -1,0 +1,41 @@
+class Solution {
+    
+    class result{
+        
+        int maxLen=0;
+        int maxSum=Integer.MIN_VALUE;
+    }
+    
+    
+    public void helper(Node root, int len, int sum, result res){
+        
+        if(root==null){
+            
+            if(res.maxLen<len){
+                
+                res.maxLen=len;
+                res.maxSum=sum;
+            }
+            else if(res.maxLen==len){
+                
+                res.maxSum=Math.max(sum, res.maxSum);
+            }
+            return;
+        }
+        
+        sum=sum+root.data;
+        
+        helper(root.left, len+1, sum, res);
+        helper(root.right, len+1, sum, res);
+    }
+    
+    public int sumOfLongRootToLeafPath(Node root) {
+        // code here
+        result res=new result();
+        
+        helper(root, 0, 0, res);
+        
+        return res.maxSum;
+        
+    }
+}
