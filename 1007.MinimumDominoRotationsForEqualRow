@@ -1,0 +1,32 @@
+class Solution {
+    public int minDominoRotations(int[] tops, int[] bottoms) {
+        
+        int A[]=new int[7];
+        int B[]=new int[7];
+        int same[]=new int[7];
+
+        for(int i=0;i<tops.length;i++){
+
+            int a=tops[i], b=bottoms[i];
+            A[a]++;
+            B[b]++;
+
+            if(a==b){
+                same[a]++;
+            }
+        }
+
+        int ans=tops.length;
+
+        for(int i=1;i<=6;i++){
+
+            if(A[i]+B[i]-same[i]==tops.length){
+
+                int min=Math.min(A[i], B[i])-same[i];
+                ans=Math.min(ans, min);
+            }
+        }
+        return ans==tops.length?-1:ans;
+    }
+
+}
