@@ -1,0 +1,36 @@
+class Solution {
+    
+    public void helper(ArrayList<Integer> arr, Node root, int k, int[] count){
+        
+        if(root==null){
+            return;
+        }
+        
+        arr.add(root.data);
+        
+        helper(arr, root.left, k, count);
+        helper(arr, root.right, k, count);
+        
+        int s=arr.size();
+        int sum=0;
+        
+        for(int i=s-1;i>=0;i--){
+            
+            sum+=arr.get(i);
+            if(sum==k){
+                count[0]++;
+            }
+        }
+        arr.remove(arr.size()-1);
+    }
+    public int sumK(Node root, int k) {
+        // code here
+        
+        ArrayList<Integer> arr=new ArrayList<>();
+        
+        int count[]=new int[1];
+        
+        helper(arr, root, k, count);
+        return count[0];
+    }
+}
