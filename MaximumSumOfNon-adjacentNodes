@@ -1,0 +1,35 @@
+class Solution {
+    
+    static class pair{
+        
+        int first;
+        int second;
+        
+        public pair(int first, int second){
+            this.first=first;
+            this.second=second;
+        }
+    }
+    
+    
+    public pair helper(Node root){
+        
+        if(root==null){
+            return new pair(0, 0);
+        }
+        
+        pair left = helper(root.left);
+        pair right = helper(root.right);
+        
+        int include = root.data + left.second + right.second;
+        int exclude = Math.max(left.first, left.second) + Math.max(right.first, right.second);
+        
+        return new pair(include, exclude);
+    }
+    public int getMaxSum(Node root) {
+        // code here
+        pair ans=helper(root);
+        
+        return Math.max(ans.first, ans.second);
+    }
+}
