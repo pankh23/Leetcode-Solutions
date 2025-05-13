@@ -1,0 +1,39 @@
+class Solution {
+    public int lengthAfterTransformations(String s, int t) {
+        
+        final int mod=1_000_000_007;
+
+        long[] freq=new long[26];
+
+        for(char ch:s.toCharArray()){
+
+            freq[ch-'a']++;
+        }
+
+        for(int i=0;i<t;i++){
+
+            long[] newFreq=new long[26];
+
+            for(int j=0;j<=25;j++){
+
+                if(j==25){
+
+                    newFreq[0]=(newFreq[0]+freq[25])%mod;
+                    newFreq[1]=(newFreq[1]+freq[25])%mod;
+                }
+                else{
+                    newFreq[j+1]=(newFreq[j+1]+freq[j])%mod;
+                }
+            }
+
+            freq=newFreq;
+        }
+
+        long total = 0;
+        for (long count : freq) {
+            total = (total+count)%mod;
+        }
+
+        return (int) total;
+    }
+}
