@@ -1,0 +1,23 @@
+class Solution {
+    public char kthCharacter(int k) {
+        
+        String word="a";
+        String temp="a";
+
+        if(word.length()>k){
+            return word.charAt(k);
+        }
+
+        while(word.length()<k){
+
+            for(int i=0;i<word.length();i++){
+
+                int value=word.charAt(i);
+                String next=String.valueOf((char)(value+1));
+                temp+=next;
+            }
+            word=temp;
+        }
+        return word.charAt(k-1);
+    }
+}
