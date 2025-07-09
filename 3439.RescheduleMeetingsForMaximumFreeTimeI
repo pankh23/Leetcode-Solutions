@@ -1,0 +1,38 @@
+class Solution {
+    public int maxFreeTime(int eventTime, int k, int[] startTime, int[] endTime) {
+        
+        if(startTime.length!=endTime.length){
+            return 0;
+        }
+
+        if(startTime.length==eventTime){
+            return 0;
+        }
+
+        int[] gaps=new int[endTime.length+1];
+
+        gaps[0]=startTime[0];
+        for(int i=1;i<endTime.length;i++){
+
+            gaps[i]=startTime[i]-endTime[i-1];
+        }
+        gaps[endTime.length]=eventTime-endTime[endTime.length-1];
+
+        int l=0, r=0;
+        int max=0, sum=0, maxWin=k+1;
+
+        while(r<=endTime.length){
+
+            sum+=gaps[r];
+            if(r-l+1>maxWin){
+                sum-=gaps[l];
+                l++;
+            }
+            if(r-l+1==maxWin){
+                max=Math.max(max, sum);
+            }
+            r++;
+        }
+        return max;
+    }
+}
