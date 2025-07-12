@@ -1,0 +1,49 @@
+class Solution {
+    public ArrayList<Node> findPreSuc(Node root, int key) {
+        // code here
+        Node temp=root;
+        Node pred=null, succ=null;
+        
+        while(temp!=null && temp.data!=key){
+            
+            if(temp.data>key){
+                succ=temp;
+                temp=temp.left;
+                
+            }
+            else{
+                pred=temp;
+                temp=temp.right;
+                
+            }
+        }
+        
+        
+        if(temp!=null){
+            
+            Node left=temp.left;
+            
+            while(left!=null){
+            
+                pred=left;
+                left=left.right;
+            }   
+        
+            Node right=temp.right;
+            
+            while(right!=null){
+                
+                succ=right;
+                right=right.left;
+            }
+        }
+        
+        
+        ArrayList<Node> arr=new ArrayList<>();
+        
+        arr.add(pred);
+        arr.add(succ);
+        
+        return arr;
+    }
+}
