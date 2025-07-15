@@ -1,0 +1,33 @@
+class Solution {
+    
+    public void inorder(Node root, ArrayList<Integer> arr){
+        
+        if(root==null){
+            return;
+        }
+        
+        inorder(root.left, arr);
+        arr.add(root.data);
+        inorder(root.right, arr);
+        
+    }
+    public Node flattenBST(Node root) {
+        // Code here
+        ArrayList<Integer> arr=new ArrayList<>();
+        
+        inorder(root, arr);
+        
+        if(arr.isEmpty()){
+            return null;
+        }
+        Node first=new Node(arr.get(0));
+        Node ans=first;
+        
+        for(int i=1;i<arr.size();i++){
+            
+            ans.right=new Node(arr.get(i));
+            ans=ans.right;
+        }
+        return first;
+    }
+}
