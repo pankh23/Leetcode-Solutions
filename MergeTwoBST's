@@ -1,0 +1,69 @@
+/*
+class Node
+{
+    int data;
+    Node left, right;
+
+    public Node(int d)
+    {
+        data = d;
+        left = right = null;
+    }
+}
+
+*/
+class Solution {
+    // Function to return a list of integers denoting the node
+    // values of both the BST in a sorted order.
+    public ArrayList<Integer> merge(Node root1, Node root2) {
+        // Write your code here
+        
+        ArrayList<Integer> a1=new ArrayList<>();
+        ArrayList<Integer> a2=new ArrayList<>();
+        
+        inorder(root1, a1);
+        inorder(root2, a2);
+        return helper(a1, a2);
+    }
+    
+    public void inorder(Node root,  ArrayList<Integer> arr){
+        
+        if (root == null) return;
+        inorder(root.left, arr);
+        arr.add(root.data);
+        inorder(root.right, arr);
+        
+    }
+    
+    public ArrayList<Integer> helper(ArrayList<Integer> a1, ArrayList<Integer> a2){
+        
+        ArrayList<Integer> res=new ArrayList<>();
+        
+        int i=0, j=0;
+
+        while(i<a1.size() && j<a2.size()){
+            
+            if(a1.get(i)<a2.get(j)){
+                
+                res.add(a1.get(i));
+                i++;
+            }
+            else{
+                res.add(a2.get(j));
+                j++;
+            }
+        }
+        
+        while(a1.size()>i){
+            
+            res.add(a1.get(i));
+            i++;
+        }
+        while(a2.size()>j){
+            
+            res.add(a2.get(j));
+            j++;
+        }
+        return res;
+    }
+}
