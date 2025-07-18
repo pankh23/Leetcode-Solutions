@@ -1,0 +1,60 @@
+class Solution {
+    public long minimumDifference(int[] nums) {
+
+        int n=nums.length/3;
+        int len=nums.length;
+        
+        PriorityQueue<Integer> max=new PriorityQueue<>(Collections.reverseOrder());
+
+        long[] left=new long[len];
+        long[] right=new long[len];
+
+        long leftSum=0;
+
+        for(int i=0;i<2*n;i++){
+
+            max.add(nums[i]);
+            leftSum+=nums[i];
+
+            if(max.size()>n){
+                leftSum-=max.poll();
+            }
+
+            if(max.size()==n){
+                left[i]=leftSum;
+            }
+            else{
+                left[i]=Long.MAX_VALUE;
+            }
+        }
+
+        PriorityQueue<Integer> min=new PriorityQueue<>();
+
+        long rightSum=0;
+
+        for(int i=len-1;i>=n;i--){
+
+            min.add(nums[i]);
+            rightSum+=nums[i];
+
+            if(min.size()>n){
+                rightSum-=min.poll();
+            }
+
+            if(min.size()==n){
+
+                right[i]=rightSum;
+            }
+            else{
+                right[i]=Long.MIN_VALUE;
+            }
+        }
+        long res=Long.MAX_VALUE;
+
+        for(int i=n-1;i<2*n;i++){
+
+            res=Math.min(res, left[i]-right[i+1]);
+        }
+        return res;
+    }
+}
