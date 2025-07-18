@@ -1,0 +1,26 @@
+class Solution {
+    int findMaxSum(int arr[]) {
+        // code here
+        
+        int dp[]=new int[arr.length];
+
+        Arrays.fill(dp, -1);
+        
+        return func(arr, arr.length-1, dp);
+    }
+    
+    int func(int[] arr, int i, int[] dp){
+        
+        if(i==0) return arr[i];
+        
+        if(i<0) return 0;
+        
+        if(dp[i]!=-1) return dp[i];
+        
+        int pick=arr[i]+func(arr, i-2, dp);
+        
+        int notpick=0+func(arr, i-1, dp);
+        
+        return dp[i]=Math.max(pick, notpick);
+    }
+}
