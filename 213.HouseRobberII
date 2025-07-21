@@ -1,26 +1,28 @@
 class Solution {
-    
-    private int robLinear(int[] nums) {
-        int n = nums.length;
-        int prev = 0, curr = 0;
-        for (int num : nums) {
-            int temp = curr;
-            curr = Math.max(prev + num, curr);
-            prev = temp;
-        }
-        return curr;
+    public int rob(int[] nums) {
+        
+        if(nums.length==1) return nums[0];
+
+        int ans1=helper(nums, 0, nums.length-2);
+        int ans2=helper(nums, 1, nums.length-1);
+
+        return Math.max(ans2, ans1);
     }
 
-    public int rob(int[] nums) {
-        int n = nums.length;
-        if (n == 1) return nums[0];
-        
-        int[] case1 = new int[n - 1];
-        System.arraycopy(nums, 0, case1, 0, n - 1);
+    public int helper(int[] arr, int s, int e){
 
-        int[] case2 = new int[n - 1];
-        System.arraycopy(nums, 1, case2, 0, n - 1);
-        
-        return Math.max(robLinear(case1), robLinear(case2));
+        int prev=arr[s];
+        int prev2=0;
+
+        for(int i=s+1;i<=e;i++){
+
+            int take=prev2+arr[i];
+            int not=prev;
+
+            int cur=Math.max(take, not);
+            prev2=prev;
+            prev=cur;
+        }
+        return prev;
     }
 }
