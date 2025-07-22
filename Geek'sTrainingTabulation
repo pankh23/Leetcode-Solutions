@@ -1,0 +1,41 @@
+// User function Template for Java
+
+class Solution {
+    public int maximumPoints(int arr[][]) {
+        // code here
+        
+        int[][] dp=new int[arr.length][4];
+        
+        for(int[] r:dp)Arrays.fill(r, -1);
+
+        return helper(arr, dp);
+    }
+    
+    public int helper(int[][] arr, int[][] dp){
+        
+        dp[0][0]=Math.max(arr[0][1], arr[0][2]);
+        dp[0][1]=Math.max(arr[0][0], arr[0][2]);
+        dp[0][2]=Math.max(arr[0][1], arr[0][0]);
+        dp[0][3]=Math.max(arr[0][1], Math.max(arr[0][2], arr[0][0]));
+        
+        
+        for(int day=1;day<arr.length;day++){
+            
+            for(int last=0;last<4;last++){
+                
+                dp[day][last]=0;
+                int max=0;
+                
+                for(int i=0;i<3;i++){
+                    
+                    if(last!=i){
+                        
+                        int p=arr[day][i]+dp[day-1][i];
+                        dp[day][last]=Math.max(p, dp[day][last]);
+                    }
+                }
+            }
+        }
+        return dp[arr.length-1][3];
+    }
+}
