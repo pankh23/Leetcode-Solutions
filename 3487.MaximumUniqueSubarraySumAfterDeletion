@@ -1,0 +1,30 @@
+class Solution {
+    public int maxSum(int[] nums) {
+        
+        int ans=0, maxNeg=Integer.MIN_VALUE;
+        boolean isPos=false;
+
+        if(nums.length==1){
+            return nums[0];
+        }
+
+        HashSet<Integer> set=new HashSet<>();
+
+        for(int i=0;i<nums.length;i++){
+
+            if(!set.contains(nums[i])){
+                set.add(nums[i]);
+
+                if(nums[i]>0){
+                    ans+=nums[i];
+                    isPos=true;
+                }
+                else{
+                    maxNeg=Math.max(nums[i], maxNeg);
+                }
+            }
+
+        }
+        return isPos?ans:maxNeg;
+    }
+}
