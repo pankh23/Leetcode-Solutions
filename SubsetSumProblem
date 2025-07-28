@@ -1,0 +1,35 @@
+class Solution {
+
+    static Boolean isSubsetSum(int arr[], int sum) {
+        // code here
+        
+        Boolean[][] dp=new Boolean[arr.length][sum+1];
+        
+        return f(arr, arr.length-1, sum, dp);
+        
+    }
+    
+    static Boolean f(int[] arr, int i, int sum, Boolean[][] dp){
+        
+        if(sum==0)return true;
+        
+        if(i==0)return arr[0]==sum;
+        
+        if(dp[i][sum]!=null){
+            
+            return dp[i][sum];
+        }
+        
+        Boolean notTake=f(arr, i-1, sum, dp);
+        
+        Boolean take=false;
+        
+        if(arr[i]<=sum){
+            
+            take=f(arr, i-1, sum-arr[i], dp);
+        }
+        
+        return dp[i][sum]=notTake || take;
+        
+    }
+}
