@@ -1,0 +1,42 @@
+class Solution {
+    // Function to calculate the number of subsets with a given sum
+    public int perfectSum(int[] nums, int target) {
+        // code here
+        
+        int[][] dp=new int[nums.length][target+1];
+        
+        for(int i[]:dp){
+            Arrays.fill(i, -1);
+        }
+        
+        return helper(nums, nums.length-1, target, dp);
+    }
+    
+    public int helper(int[] arr, int i, int tar, int[][] dp){
+        
+        if(i==0){
+            
+            if(arr[i]==tar && tar==0){
+                return 2;
+            }
+            else if(arr[i]==tar || tar==0){
+                return 1;
+            }
+            return 0;
+        }
+        
+        if(dp[i][tar]!=-1){
+            return dp[i][tar];
+        }
+        
+        int notPick=helper(arr, i-1, tar, dp);
+        int pick=0;
+        
+        if(arr[i]<=tar){
+            
+            pick=helper(arr, i-1, tar-arr[i], dp);
+        }
+        
+        return dp[i][tar]=pick+notPick;
+    } 
+}
