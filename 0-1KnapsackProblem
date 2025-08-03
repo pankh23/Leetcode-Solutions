@@ -1,0 +1,35 @@
+class Solution {
+    static int knapsack(int W, int val[], int wt[]) {
+        // code here
+        
+        Integer[][] dp=new Integer[val.length][W+1];
+        
+        return helper(val.length-1, W, val, wt, dp);
+    }
+    
+    static int helper(int i, int w, int[] val, int[] wt, Integer[][] dp){
+        
+        if(i==0){
+            if(w>=wt[i]){
+                return val[i];
+            }
+            else{
+                return 0;
+            }
+        }
+        
+        if(dp[i][w]!=null){
+            return dp[i][w];
+        }
+        
+        int notTake=helper(i-1, w, val, wt, dp);
+            
+        int take=Integer.MIN_VALUE;
+        
+        if(wt[i]<=w){
+            
+            take=val[i]+helper(i-1, w-wt[i], val, wt, dp);
+        }
+        return dp[i][w]=Math.max(take, notTake);
+    }
+}
