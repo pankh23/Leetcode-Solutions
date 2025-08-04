@@ -1,0 +1,25 @@
+class Solution {
+    public int count(int coins[], int sum) {
+        // code here.
+        
+        Integer[][] dp=new Integer[coins.length][sum+1];
+        
+        return helper(coins, sum, coins.length-1, dp);
+        
+    }
+    
+    public int helper(int[] arr, int s, int i, Integer[][] dp){
+        
+        if (s == 0) return 1;
+        if (i < 0 || s < 0) return 0;
+
+        if(dp[i][s]!=null){
+            return dp[i][s];
+        }
+        int notTake = helper(arr, s, i - 1, dp);
+
+        int take = helper(arr, s - arr[i], i, dp);
+
+        return dp[i][s]=(notTake+take);
+    }
+}
