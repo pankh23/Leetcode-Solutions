@@ -1,0 +1,63 @@
+class Pair{
+
+    int first;
+    int sec;
+
+    public Pair(int first, int sec){
+        this.first=first;
+        this.sec=sec;
+    }
+}
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        
+        int k=0, fresh=0;
+
+        Queue<Pair> q=new LinkedList<Pair>();
+
+        for(int i=0;i<grid.length;i++){
+
+            for(int j=0;j<grid[0].length;j++){
+
+                if(grid[i][j]==2){
+                    q.offer(new Pair(i, j));
+                }
+                else if(grid[i][j]==1){
+                    fresh++;
+                }
+            }
+        }
+
+        int[] row={-1, 0, 1, 0};
+        int[] col={0, -1, 0, 1};
+
+        while(!q.isEmpty()){
+
+            int s=q.size();
+            boolean minute=false;
+
+            for(int j=0;j<s;j++){
+                
+                Pair curr=q.poll();
+    
+                for(int i=0;i<4;i++){
+
+                    int m=curr.first+row[i];
+                    int n=curr.sec+col[i];
+
+                    if(m>=0 && n>=0 && m<grid.length && n<grid[0].length && 
+                    grid[m][n]==1){
+
+                        q.offer(new Pair(m, n));
+                        grid[m][n]=2;
+                        minute=true;
+                        fresh--;
+                    }
+                }
+            }
+            if(minute)k++;
+        }
+
+        return fresh==0?k:-1;
+    }
+}
