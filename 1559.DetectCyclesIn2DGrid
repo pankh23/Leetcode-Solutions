@@ -1,0 +1,66 @@
+class Pair {
+    int x, y;
+    int px, py;
+
+    public Pair(int x, int y, int px, int py) {
+        this.x = x;
+        this.y = y;
+        this.px = px;
+        this.py = py;
+    }
+}
+
+class Solution {
+    public boolean containsCycle(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        boolean[][] vis = new boolean[m][n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (!vis[i][j]) {
+                    if (helper(grid, vis, i, j, grid[i][j])) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean helper(char[][] grid, boolean[][] vis, int i, int j, char target) {
+        int[] dx = {0, 0, 1, -1};
+        int[] dy = {1, -1, 0, 0};
+        int m = grid.length;
+        int n = grid[0].length;
+
+        Queue<Pair> q = new LinkedList<>();
+        q.offer(new Pair(i, j, -1, -1));
+        vis[i][j] = true;
+
+        while (!q.isEmpty()) {
+            Pair p = q.poll();
+
+            for (int d = 0; d < 4; d++) {
+                int ni = p.x + dx[d];
+                int nj = p.y + dy[d];
+
+                if (ni < 0 || nj < 0 || ni >= m || nj >= n) continue;
+
+                if (grid[ni][nj] != target) continue;
+
+                if (vis[ni][nj]) {
+                    if (ni != p.px || nj != p.py) {
+                        return true;
+                    }
+                }
+                else {
+                    vis[ni][nj] = true;
+                    q.offer(new Pair(ni, nj, p.x, p.y));
+                }
+            }
+        }
+
+        return false;
+    }
+}
