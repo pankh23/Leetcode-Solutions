@@ -1,0 +1,66 @@
+class Pair{
+    
+    int first;
+    int sec;
+    
+    public Pair(int f, int s){
+        first=f;
+        sec=s;
+    }
+}
+class Solution {
+    public boolean isCycle(int V, int[][] edges) {
+        // Code here
+        
+        boolean[] vis=new boolean[V];
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        
+         for(int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for(int[] edge : edges) {
+            adj.get(edge[0]).add(edge[1]);
+            adj.get(edge[1]).add(edge[0]);
+        }
+        
+        for(int i = 0; i < V; i++) {
+            if(!vis[i]) {
+                if(helper(i, adj, vis)) {
+                    return true;  
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean helper(int v, ArrayList<ArrayList<Integer>> adj, boolean[] vis){
+        
+        
+        Queue<Pair> q=new LinkedList<Pair>();
+        
+        q.offer(new Pair(v, -1));
+        vis[v]=true;
+        
+        
+        while(!q.isEmpty()){
+            
+            int node=q.peek().first;
+            int parent=q.peek().sec;
+            q.remove();
+            
+            for(int i:adj.get(node)){
+                
+                if(vis[i]==false){
+                    
+                    vis[i]=true;
+                    q.offer(new Pair(i, node));
+                }
+                else if(i!=parent){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
