@@ -1,0 +1,47 @@
+class Solution {
+    public boolean isCycle(int V, int[][] edges) {
+        // Code here
+        
+        ArrayList<ArrayList<Integer>> arr=new ArrayList<>();
+        boolean[] vis=new boolean[V];
+        
+        for (int i = 0; i < V; i++) {
+            arr.add(new ArrayList<>());
+        }
+        
+        for(int[] e:edges){
+            
+            arr.get(e[0]).add(e[1]);
+            arr.get(e[1]).add(e[0]);
+        }
+        
+        for(int i=0;i<V;i++){
+            
+            if(vis[i]==false){
+                if(helper(i, -1, vis, arr)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean helper(int v, int p, boolean[] vis, ArrayList<ArrayList<Integer>> arr){
+        
+        vis[v]=true;
+        
+        for(int i:arr.get(v)){
+            
+            if(vis[i]==false){
+                if(helper(i, v, vis, arr)){
+                    return true;
+                }
+                
+            }
+            else if(i!=p){
+                return true;
+            }
+        }
+        return false;
+    }
+}
