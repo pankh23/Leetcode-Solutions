@@ -1,0 +1,42 @@
+class Solution {
+    private int MOD=1_000_000_007;
+
+    public int numberOfWays(int n, int x) {
+        
+        Integer[][] dp=new Integer[n+1][n+1];
+        return helper(n, 1, x, dp);
+    }
+
+    public int helper(int rem, int cur, int x, Integer[][] dp){
+
+        if(rem==0)return 1;
+        if(rem<0 || cur > dp[0].length - 1)return 0;
+
+        if(dp[rem][cur]!=null){
+            return dp[rem][cur];
+        }
+        int pow = cal(cur, x);
+
+        if (pow > rem){
+            dp[rem][cur] = 0;
+            return 0;
+        } 
+
+        int pick=helper(rem-pow, cur+1, x, dp)%MOD;
+        int notPick=helper(rem, cur+1, x, dp)%MOD;
+
+        dp[rem][cur]=(pick+notPick)%MOD;
+
+        return dp[rem][cur];
+    }
+
+    public int cal(int cur, int x){
+
+        long k=1;
+
+        for(int i=0;i<x;i++){
+            k*=cur;
+        }
+        return (int)k;
+    }
+}
