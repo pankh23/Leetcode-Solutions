@@ -1,0 +1,31 @@
+// User function Template for Java
+
+class Solution {
+    static int knapSack(int val[], int wt[], int capacity) {
+        // code here
+        
+        Integer dp[][]=new Integer[wt.length][capacity+1];
+        
+        for(int i=0;i<=capacity;i++){
+            
+            dp[0][i]=(i/wt[0])*val[0];
+        }
+        
+        for(int i=1;i<wt.length;i++){
+            
+            for(int j=0;j<=capacity;j++){
+                
+                int notpick=dp[i-1][j];
+                int pick=0;
+                
+                if(j>=wt[i]){
+                    
+                    pick=val[i]+dp[i][j-wt[i]];
+                }
+                
+                dp[i][j]=Math.max(pick, notpick);
+            }
+        }
+        return dp[wt.length-1][capacity];
+    }
+}
