@@ -1,0 +1,54 @@
+class Solution {
+    public int numEnclaves(int[][] grid) {
+        
+        boolean[][] vis=new boolean[grid.length][grid[0].length];
+        int count=0;
+
+        for(int i=0;i<grid.length;i++){
+
+            if(grid[i][0]==1 && vis[i][0]==false){
+                dfs(i, 0, grid, vis);
+            }
+            if(grid[i][grid[0].length-1]==1 && vis[i][grid[0].length-1]==false){
+                dfs(i, grid[0].length-1, grid, vis);
+            }
+        }
+
+        for(int j=0;j<grid[0].length;j++){
+
+            if(grid[0][j]==1 && vis[0][j]==false){
+                dfs(0, j, grid, vis);
+            }
+            if(grid[grid.length-1][j]==1 && vis[grid.length-1][j]==false){
+                dfs(grid.length-1, j, grid, vis);
+            }
+        }
+
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+
+                if(grid[i][j]==1 && vis[i][j]==false){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public void dfs(int i, int j, int[][] grid, boolean[][] vis){
+
+        int[] row={-1, 0, 1, 0};
+        int[] col={0, -1, 0, 1};
+
+        vis[i][j]=true;
+        for(int k=0;k<4;k++){
+
+            int r=i+row[k];
+            int c=j+col[k];
+
+            if(r>=0 && r<grid.length && c>=0 && c<grid[0].length && grid[r][c]==1 && vis[r][c]==false){
+                dfs(r, c, grid, vis);
+            }
+        }
+    }
+}
