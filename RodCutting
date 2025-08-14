@@ -1,0 +1,30 @@
+class Solution {
+    public int cutRod(int[] price) {
+        // code here
+        Integer[][] dp=new Integer[price.length][price.length+1];
+        
+        return helper(price, price.length-1, price.length, dp);
+    }
+    
+    public static int helper(int[] arr, int ind, int ele, Integer[][] dp){
+        
+        if(ind==0){
+            return ele*arr[0];
+        }
+        
+        if(dp[ind][ele]!=null){
+            return dp[ind][ele];
+        }
+        int nottake=helper(arr, ind-1, ele, dp);
+        
+        int take=0;
+        int len=ind+1;
+        
+        if(len<=ele){
+            
+            take=arr[ind]+helper(arr, ind, ele-len, dp);
+        }
+        
+        return dp[ind][ele]=Math.max(nottake, take);
+    }
+}
