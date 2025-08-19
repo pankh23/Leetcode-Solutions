@@ -1,0 +1,58 @@
+class Solution {
+    public boolean isBipartite(int V, int[][] edges) {
+        // Code here
+        
+        int[] color=new int[V];
+        
+        ArrayList<ArrayList<Integer>> arr=new ArrayList<>();
+        
+        for(int i=0;i<V;i++){
+            
+            arr.add(new ArrayList<>());
+        }
+        
+        for(int[] e:edges){
+            
+            arr.get(e[0]).add(e[1]);
+            arr.get(e[1]).add(e[0]);
+        }
+        
+        for(int i=0;i<V;i++){
+            color[i]=-1;
+        }
+        
+        for(int i=0;i<V;i++){
+            
+            if(color[i]==-1){
+                
+                color[i]=0;
+                
+                if(dfs(color, arr, i)==false){
+                    return false; 
+                }
+            }
+        }
+        return true;
+    }
+    
+    public static boolean dfs(int[] c, ArrayList<ArrayList<Integer>> arr, int i){
+        
+        
+        for(int j:arr.get(i)){
+            
+            if(c[j]==-1){
+                
+                c[j]=1-c[i];
+                
+                if(dfs(c, arr, j)==false){
+                    return false;
+                }
+            }
+            else if(c[j]==c[i]){
+                
+                return false;
+            }
+        }
+        return true;
+    }
+}
