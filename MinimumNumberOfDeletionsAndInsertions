@@ -1,0 +1,43 @@
+// User function Template for Java
+
+class Solution {
+    public int minOperations(String s1, String s2) {
+        // Your code goes here
+        
+        int del=s1.length()-lcs(s1, s2);
+        int ins=s2.length()-lcs(s1, s2);
+        
+        return del+ins;
+    }
+    
+    public static int lcs(String s1, String s2){
+        
+        int[][] dp=new int[s1.length()+1][s2.length()+1];
+        
+        for(int i=0;i<s1.length();i++){
+            
+            dp[i][0]=0;
+        }
+        
+        for(int i=0;i<s2.length();i++){
+            
+            dp[0][i]=0;
+        }
+        
+        
+        for(int i=1;i<=s1.length();i++){
+            
+            for(int j=1;j<=s2.length();j++){
+                
+                if(s1.charAt(i-1)==s2.charAt(j-1)){
+                    
+                    dp[i][j]=1+dp[i-1][j-1];
+                }
+                else{
+                    dp[i][j]=Math.max(dp[i-1][j], dp[i][j-1]);
+                }
+            }
+        }
+        return dp[s1.length()][s2.length()];
+    }
+}
