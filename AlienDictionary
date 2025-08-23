@@ -1,0 +1,97 @@
+class Solution {
+    public String findOrder(String[] words) {
+        // code here
+        
+        ArrayList<ArrayList<Integer>> arr=new ArrayList<>();
+        
+        Set<Character> set = new HashSet<>();
+        
+        for (String w:words) {
+            for (char c:w.toCharArray()) {
+                set.add(c);
+            }
+        }
+        
+        int n=set.size();
+        
+        for(int i=0;i<26;i++){
+            
+            arr.add(new ArrayList<>());
+        }
+        
+        for(int i=0;i<words.length-1;i++){
+            
+            String s1=words[i];
+            String s2=words[i+1];
+            
+            int min=Math.min(s1.length(), s2.length());
+            
+            boolean found = false;
+
+            for (int j = 0; j < min; j++) {
+                if (s1.charAt(j) != s2.charAt(j)) {
+                    arr.get(s1.charAt(j) - 'a').add(s2.charAt(j) - 'a');
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found && s1.length() > s2.length()) {
+                return "";
+            }
+        }
+        
+        List<Integer> list=topo(arr, set);
+        
+        StringBuilder ans = new StringBuilder();
+        
+        for (int i : list) {
+            
+            ans.append((char)(i + 'a'));
+        }
+        return ans.toString();
+    }
+    
+    public static List<Integer> topo(ArrayList<ArrayList<Integer>> arr, Set<Character> set){
+        
+        int[] in=new int[26];
+        
+        for(int i=0;i<26;i++){
+            
+            for(int k:arr.get(i)){
+                in[k]++;
+            }
+        }
+        
+        Queue<Integer> q=new LinkedList<>();
+        
+        for (char c : set) {
+            if (in[c - 'a'] == 0) {
+                q.add(c - 'a');
+            }
+        }
+        
+        List<Integer> list=new ArrayList<>();
+        
+        while(!q.isEmpty()){
+            
+            int k=q.poll();
+            list.add(k);
+            
+            for(int i:arr.get(k)){
+                
+                in[i]--;
+                if(in[i]==0){
+                    
+                    q.add(i);
+                }
+            }
+        }
+        
+        if (list.size() < set.size()) {
+            return new ArrayList<>();
+        }
+        
+        return list;
+    }
+}
