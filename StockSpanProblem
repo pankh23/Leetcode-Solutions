@@ -1,0 +1,25 @@
+
+class Solution {
+    public ArrayList<Integer> calculateSpan(int[] arr) {
+        // code here
+        
+        Stack<Integer> st=new Stack<>();
+        ArrayList<Integer> ans=new ArrayList<>();
+        
+        for(int i=0;i<arr.length;i++){
+            
+            while(!st.isEmpty() && arr[st.peek()]<=arr[i]){
+                
+                st.pop();
+            }
+            
+            int stock=st.isEmpty()?i+1:i-st.peek();
+            
+            ans.add(stock);
+            
+            st.push(i);
+        }
+        
+        return ans;
+    }
+}
