@@ -1,0 +1,64 @@
+// User function Template for Java
+
+class Solution {
+    public ArrayList<ArrayList<String>> findSequences(String startWord,
+                                                      String targetWord,
+                                                      String[] wordList) {
+        Queue<ArrayList<String>> q = new LinkedList<>();
+
+        ArrayList<String> arr = new ArrayList<>();
+        arr.add(startWord);
+        q.add(arr);
+
+        Set<String> set = new HashSet<>();
+        for (String s : wordList) {
+            set.add(s);
+        }
+
+        int level = 0;
+        ArrayList<ArrayList<String>> ans = new ArrayList<>();
+        ArrayList<String> used = new ArrayList<>();
+        used.add(startWord);
+
+        while (!q.isEmpty()) {
+            ArrayList<String> curr = q.poll();
+
+            // if we reach a new level
+            if (curr.size() > level) {
+                level++;
+                for (String s : used) {
+                    set.remove(s);
+                }
+                used.clear();
+            }
+
+            String word = curr.get(curr.size() - 1);
+
+            // if we find target word
+            if (word.equals(targetWord)) {
+                if (ans.size() == 0) {
+                    ans.add(curr);
+                } else if (ans.get(0).size() == curr.size()) {
+                    ans.add(curr);
+                }
+            }
+
+            // try all possible transformations
+            for (int i = 0; i < word.length(); i++) {
+                for (char c = 'a'; c <= 'z'; c++) {
+                    String newWord = word.substring(0, i) + c + word.substring(i + 1);
+
+                    if (set.contains(newWord)) {
+                        curr.add(newWord);
+                        ArrayList<String> newArr = new ArrayList<>(curr);
+                        q.add(newArr);
+                        used.add(newWord);
+                        curr.remove(curr.size() - 1);
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
+}
