@@ -1,0 +1,29 @@
+class Solution {
+    public int maxProfit(int k, int[] prices) {
+        
+        Integer dp[][][]=new Integer[prices.length][2][k+1];
+
+        return helper(k, 1, prices, 0, dp);
+    }
+
+    public int helper(int k, int buy, int[] arr, int ind,  Integer dp[][][]){
+
+        if(k==0 || ind==arr.length){
+            return 0;
+        }
+
+        if(dp[ind][buy][k]!=null){
+
+            return dp[ind][buy][k];
+        }
+        if(buy==1){
+
+            dp[ind][buy][k]=Math.max(-arr[ind]+helper(k, 0, arr, ind+1, dp), helper(k, 1, arr, ind+1, dp));
+        }
+        else{
+            dp[ind][buy][k]=Math.max(arr[ind]+helper(k-1, 1, arr, ind+1, dp), helper(k, 0, arr, ind+1, dp));
+        }
+
+        return dp[ind][buy][k];
+    }
+}
