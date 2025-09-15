@@ -1,0 +1,54 @@
+class Solution {
+    public int[] dijkstra(int V, int[][] edges, int src) {
+        // code here
+        
+        PriorityQueue<int[]> pq=new PriorityQueue<>((a, b)->a[0]-b[0]);
+        
+        ArrayList<ArrayList<int[]>> adj=new ArrayList<>();
+        
+        for(int i=0;i<V;i++){
+            
+            adj.add(new ArrayList<>());
+        }
+        
+        for(int[] i:edges){
+            int u=i[0], v=i[1], w=i[2];
+            
+            adj.get(u).add(new int[]{v, w});
+            adj.get(v).add(new int[]{u, w});
+        }
+        
+        int[] dist=new int[V];
+        
+        for(int i=0;i<V;i++){
+            dist[i]=Integer.MAX_VALUE;
+        }
+        dist[src]=0;
+        
+        pq.offer(new int[]{0, src});
+        
+        while(!pq.isEmpty()){
+            
+            int arr[]=pq.poll();
+            int d=arr[0];
+            int n=arr[1];
+            
+            if(d>dist[n]){
+                continue;
+            }
+            
+            for(int nodes[]:adj.get(n)){
+                
+                int node=nodes[0];
+                int wt=nodes[1];
+                
+                if(wt+d<dist[node]){
+                    
+                    dist[node]=wt+d;
+                    pq.offer(new int[]{dist[node], node});
+                }
+            }
+        }
+        return dist;
+    }
+}
