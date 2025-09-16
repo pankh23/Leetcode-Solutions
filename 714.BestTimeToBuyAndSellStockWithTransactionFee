@@ -1,0 +1,27 @@
+class Solution {
+    public int maxProfit(int[] prices, int fee) {
+        
+        Integer[][] dp=new Integer[prices.length][2];
+        return helper(prices, fee, 1, 0, dp);
+    }
+
+    public int helper(int[] arr, int fee, int buy, int ind, Integer[][] dp){
+
+        if(ind>=arr.length){
+            return 0;
+        }
+
+        if(dp[ind][buy]!=null){
+            return dp[ind][buy];
+        }
+
+        if(buy==1){
+            dp[ind][buy]=Math.max(-arr[ind]+helper(arr, fee, 0, ind+1, dp), helper(arr, fee, 1, ind+1, dp));
+        }
+        else{
+            dp[ind][buy]=Math.max(arr[ind]-fee+helper(arr, fee, 1, ind+1, dp), helper(arr, fee, 0, ind+1, dp));
+        }
+
+        return dp[ind][buy];
+    }
+}
