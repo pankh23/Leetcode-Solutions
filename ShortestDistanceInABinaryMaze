@@ -1,0 +1,74 @@
+// User function Template for Java
+class combine{
+    
+    int num;
+    int rowN;
+    int colN;
+    
+    combine(int num, int rowN, int colN){
+        
+        this.num=num;
+        this.rowN=rowN;
+        this.colN=colN;
+    }
+}
+
+class Solution {
+
+    int shortestPath(int[][] grid, int[] source, int[] destination) {
+
+        // Your code here
+        
+        if(source[0]==destination[0] && source[1]==destination[1]){
+            return 0;
+        }
+        
+        Queue<combine> q=new LinkedList<>();
+        
+        int m=grid.length, n=grid[0].length;    
+        
+        int[][] dist=new int[m][n];
+        
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                
+                dist[i][j]=Integer.MAX_VALUE;
+            }
+        }
+        
+        dist[source[0]][source[1]]=0;
+        
+        q.add(new combine(0, source[0], source[1]));
+        
+        int[] dr={-1, 0, 1, 0};
+        int[] dc={0, -1, 0, 1};
+        
+        
+        while(!q.isEmpty()){
+            
+            combine co=q.remove();
+            
+            int num=co.num;
+            int row=co.rowN;
+            int col=co.colN;
+            
+            for(int i=0;i<4;i++){
+                
+                int r=row+dr[i];
+                int c=col+dc[i];
+                
+                if(r>=0 && r<m && c>=0 && c<n && grid[r][c]==1 && dist[r][c]>num+1){
+                    
+                    dist[r][c]=num+1;
+                    
+                    if(r==destination[0] && c==destination[1]){
+                        return dist[r][c];
+                    }
+                    q.add(new combine(num+1, r, c));
+                }
+            }
+        }
+        return -1;
+        
+    }
+}
