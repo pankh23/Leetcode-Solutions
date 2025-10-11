@@ -1,0 +1,53 @@
+class tuple{
+    int diff, r, c;
+
+    tuple(int diff, int r, int c){
+        this.diff=diff;
+        this.r=r;
+        this.c=c;
+    }
+}
+class Solution {
+    public int minimumEffortPath(int[][] heights) {
+        
+        PriorityQueue<tuple> pq=new PriorityQueue<>((a, b)->a.diff-b.diff);
+
+        pq.add(new tuple(0, 0, 0));
+
+        int[][] dist=new int[heights.length][heights[0].length];
+
+        for(int i[]:dist){
+            Arrays.fill(i, Integer.MAX_VALUE);
+        }
+
+        int[] dr={-1, 0, 1, 0};
+        int[] dc={0, -1, 0, 1};
+
+        while(!pq.isEmpty()){
+
+            tuple t=pq.remove();
+            int d=t.diff;
+            int m=t.r;
+            int n=t.c;
+
+            if(m==heights.length-1 && n==heights[0].length-1){
+                return d;
+            }
+            for(int i=0;i<4;i++){
+                
+                int r=dr[i]+m;
+                int c=dc[i]+n;
+
+                if(r>=0 && r<heights.length && c>=0 && c<heights[0].length){
+
+                    int newEffort=Math.max(Math.abs(heights[m][n]-heights[r][c]), d);
+                    if(dist[r][c]>newEffort){
+                        dist[r][c]=newEffort;
+                        pq.add(new tuple(newEffort, r, c));
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+}
