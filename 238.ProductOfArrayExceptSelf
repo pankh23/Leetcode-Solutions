@@ -1,0 +1,44 @@
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        
+        int[] ans=new int[nums.length];
+
+        int mul=1, zero=0;
+
+        for(int i=0;i<nums.length;i++){
+
+            if(nums[i]==0){
+                zero+=1;
+                continue;
+            }
+            mul*=nums[i];
+        }
+        if(zero==1){
+
+            for(int i=0;i<nums.length;i++){
+
+                if(nums[i]==0){
+                    ans[i]=mul;
+                }
+                else{
+                    ans[i]=0;
+                }
+            }
+        }
+        else if(zero==0){
+
+            for(int i=0;i<nums.length;i++){
+
+                ans[i]=mul/nums[i];
+            }
+        }
+        else{
+
+            for(int i=0;i<nums.length;i++){
+
+                ans[i]=0;
+            }
+        }
+        return ans;
+    }
+}
