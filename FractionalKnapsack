@@ -1,0 +1,34 @@
+class Solution {
+    public double fractionalKnapsack(int[] val, int[] wt, int capacity) {
+        // code here
+        int n=wt.length;
+        Integer[] idx=new Integer[n];
+        
+        for(int i=0;i<n;i++){
+            idx[i]=i;
+        }
+      
+      Arrays.sort(idx, (a, b)->Double.compare((double)val[b]/wt[b], (double)val[a]/wt[a]));
+      
+      double total=0.0;
+      
+      for(int i=0;i<n;i++){
+          int ind=idx[i];
+          
+          if(capacity==0){
+              break; 
+          }
+          
+          if(wt[ind]<=capacity){
+              capacity=capacity-wt[ind];
+              total+=val[ind];
+          }
+          else{
+              double part=(double)capacity/wt[ind];
+              total+=val[ind]*part;
+              capacity=0;
+          }
+      }
+      return Math.round(total*1e6)/1e6;
+    }
+}
