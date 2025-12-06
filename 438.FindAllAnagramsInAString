@@ -1,0 +1,38 @@
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+
+        List<Integer> list=new ArrayList<>();
+
+        if(s.length()<p.length())return list;
+
+        HashMap<Character, Integer> map=new HashMap<>();
+        HashMap<Character, Integer> map2=new HashMap<>();
+        
+        for(int i=0;i<p.length();i++){
+
+            map.put(p.charAt(i), map.getOrDefault(p.charAt(i), 0)+1);
+        }
+
+        int left=0;
+        int k=p.length();
+
+        for(int right=0;right<s.length();right++){
+            
+            map2.put(s.charAt(right), map2.getOrDefault(s.charAt(right), 0)+1);
+
+            if(right-left+1==k){
+
+                if(map.equals(map2)){
+
+                    list.add(left);
+                }
+
+                char a=s.charAt(left);
+                map2.put(a, map2.getOrDefault(a, 0)-1);
+                if(map2.get(a)==0)map2.remove(a);
+                left++;
+            }
+        }
+        return list;
+    }
+}
