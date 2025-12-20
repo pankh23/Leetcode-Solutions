@@ -1,0 +1,30 @@
+class Solution {
+    public int countNicePairs(int[] nums) {
+        
+        HashMap<Integer, Long> map=new HashMap<>();
+
+        long c=0, mod=1_000_000_007;
+
+        for(int i:nums){
+
+            int key=i-rev(i);
+
+            long freq=map.getOrDefault(key, 0L);
+            c=(c+freq)%mod;
+            map.put(key, freq+1);
+        }
+        return (int)c;
+    }
+
+    public int rev(int ele){
+
+        int ans=0;
+
+        while(ele>0){
+
+            ans=ans*10+ele%10;
+            ele/=10;
+        }
+        return ans;
+    }
+}
