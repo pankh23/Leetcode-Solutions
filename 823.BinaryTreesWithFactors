@@ -1,0 +1,32 @@
+class Solution {
+    public int numFactoredBinaryTrees(int[] arr) {
+        
+        int mod=1_000_000_007;
+        HashMap<Integer, Long> map=new HashMap<>();
+
+        Arrays.sort(arr);
+
+        long res=0;
+
+        for(int i=0;i<arr.length;i++){
+
+            long ways=1;
+
+            for(int j=0;j<i;j++){
+
+                if(arr[i]%arr[j]==0){
+
+                    int factor=arr[i]/arr[j];
+
+                    if(map.containsKey(factor)){
+
+                        ways=(ways+(map.get(arr[j])*map.get(factor)));
+                    }
+                }
+            }
+            map.put(arr[i], ways);
+            res=(res+ways)%mod;
+        }
+        return (int)res;
+    }
+}
